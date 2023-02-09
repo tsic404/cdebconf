@@ -15,13 +15,13 @@ Build-Depends:
  libselinux1-dev (>= 2.3) [linux-any] | libselinux-dev [linux-any],
  dh-autoreconf,
  dh-exec,
-Maintainer: Deepin Developer <deepin-dev@deepin.org>
-Uploaders: Deepin Packages Builder <packages@deepin.org>
+Maintainer: Debian Install System Team <debian-boot@lists.debian.org>
+Uploaders:
  Colin Watson <cjwatson@debian.org>,
  Cyril Brulebois <kibi@debian.org>
 Standards-Version: 3.9.7
-#Vcs-Browser
-#Vcs-Git
+Vcs-Browser: https://salsa.debian.org/installer-team/cdebconf
+Vcs-Git: https://salsa.debian.org/installer-team/cdebconf.git
 
 Package: cdebconf
 Architecture: any
