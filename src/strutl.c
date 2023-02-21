@@ -831,12 +831,12 @@ char *strjoinv(const char *sep, va_list ap)
     size_t str_size = 0, str_alloc = 128;
     const char *arg;
 
-    str = di_malloc(str_alloc);
+    str = malloc(str_alloc);
 
 #define APPEND(piece, len) do { \
     if (str_size + (len) + 1 > str_alloc) { \
         str_alloc = (str_size + (len) + 1) * 2; \
-        str = di_realloc(str, str_alloc); \
+        str = realloc(str, str_alloc); \
     } \
     strncpy(str + str_size, (piece), (len)); \
     str_size += (len); \
@@ -876,12 +876,12 @@ char *strreplace(const char *src, const char *from, const char *to)
     const char *prev;
     size_t from_len = strlen(from), to_len = strlen(to);
 
-    str = di_malloc(str_alloc);
+    str = malloc(str_alloc);
 
 #define APPEND(piece, len) do { \
     if (str_size + (len) + 1 > str_alloc) { \
         str_alloc = (str_size + (len) + 1) * 2; \
-        str = di_realloc(str, str_alloc); \
+        str = realloc(str, str_alloc); \
     } \
     strncpy(str + str_size, (piece), (len)); \
     str_size += (len); \

@@ -10,9 +10,12 @@
 #include <string.h>
 #include "question.h"
 
-#include "debian-installer/macros.h"
+//#include "debian-installer/macros.h"
 
 /* Does this compiler support sentinel checking? */
+#  define DI_GNUC_PREREQ(maj,min) \
+        ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
+
 #if DI_GNUC_PREREQ(4,0)
 #  define ATTRIBUTE_SENTINEL __attribute__ ((__sentinel__))
 #else

@@ -84,7 +84,7 @@ talk(struct frontend *obj, char **value, ...)
     /* This is disgusting; it's more or less cloned from
      * confmodule_communicate.
      */
-    in = di_malloc0(insize);
+    in = calloc (1, insize);
     buf[0] = 0;
     in[0] = 0;
     while (strchr(buf, '\n') == NULL) {
@@ -98,7 +98,7 @@ talk(struct frontend *obj, char **value, ...)
         }
         if (inlen + strlen(buf) + 1 > insize) {
             insize += sizeof(buf);
-            in = di_realloc(in, insize);
+            in = realloc(in, insize);
         }
         strcat(in, buf);
     }

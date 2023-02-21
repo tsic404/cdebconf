@@ -124,7 +124,7 @@ AC_ARG_ENABLE([selinux], [AS_HELP_STRING([--enable-selinux], [build cdebconf wit
    AC_DEFINE_UNQUOTED([SELINUX_ENABLED], ["1"], [SELinux enabled])
  fi])
 
-PKG_CHECK_MODULES([DI],[libdebian-installer])
+#PKG_CHECK_MODULES([DI],[libdebian-installer])
 AC_CHECK_LIB([dl], [dlopen])
 
 dnl Autodetect what to build if not specified

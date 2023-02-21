@@ -18,13 +18,24 @@
 #include <signal.h>
 #include <errno.h>
 
-#include <debian-installer.h>
+// #include <debian-installer.h>
 
 #ifdef SELINUX_ENABLED
 #include <selinux/selinux.h>
 #else
 #define setexecfilecon(filename, fallback) do {} while(0)
 #endif
+
+int di_exec_mangle_status (int status)
+{
+  if (WIFEXITED (status))
+    return WEXITSTATUS (status);
+  if (WIFSIGNALED (status))
+    return 128 + WTERMSIG (status);
+  if (WIFSTOPPED (status))
+    return 128 + WSTOPSIG (status);
+  return status;
+}
 
 static commands_t commands[] = {
 #include "commands-list.h"

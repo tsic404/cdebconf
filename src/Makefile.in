@@ -38,7 +38,7 @@ $(BIN): $(LIBNAME) $(addsuffix .o,$(BIN))
 
 $(LIBNAME): $(LIBOBJS)
 	@echo Creating library $@
-	$(CC) $(CPPFLAGS) $(CFLAGS) -shared -o $@ $(LDFLAGS) $^ -ldl @DI_LIBS@ @TEXTWRAP_LIBS@ @SELINUX_LIBS@
+	$(CC) $(CPPFLAGS) $(CFLAGS) -shared -o $@ $(LDFLAGS) $^ -ldl @TEXTWRAP_LIBS@ @SELINUX_LIBS@
 
 $(CLILIBNAME): $(CLILIBOBJS)
 	@echo Creating shared library $@
