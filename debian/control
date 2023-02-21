@@ -8,7 +8,6 @@ Build-Depends:
  libnewt-dev,
  libtextwrap-dev (>= 0.1-5),
  libreadline-dev (>= 8.1.2-1.1),
- libdebian-installer4-dev (>= 0.41) | libdebian-installer-dev,
  libglib2.0-dev (>= 2.50),
  libgtk2.0-dev (>= 2.24) <!pkg.cdebconf.nogtk>,
  libcairo2-dev (>= 1.8.10-3) <!pkg.cdebconf.nogtk>,

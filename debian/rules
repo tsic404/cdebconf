@@ -7,9 +7,6 @@
 
 export DEB_LDFLAGS_MAINT_APPEND = -lpthread
 
-debbuild=debian/build-deb
-udebbuild=debian/build-udeb
-
 include /usr/share/dpkg/architecture.mk
 
 CONFFILE=/etc/cdebconf.conf
@@ -19,11 +16,9 @@ LIBDEBCONFDEV=libdebconfclient0-dev
 LIBDEBCONF=libdebconfclient0
 
 DEB_FRONTENDS=passthrough text newt gtk
-UDEB_FRONTENDS=passthrough text newt gtk
 
 ifneq ($(filter pkg.cdebconf.nogtk,$(DEB_BUILD_PROFILES)),)
     DEB_FRONTENDS:=$(filter-out gtk,$(DEB_FRONTENDS))
-    UDEB_FRONTENDS:=$(filter-out gtk,$(UDEB_FRONTENDS))
 endif
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)
@@ -42,7 +37,7 @@ ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
 	DEBUG_CONFIGURE_OPT=--with-debug=yes
 endif
 
-build: build-deb build-udeb
+build: build-deb
 
 build-arch: build
 build-indep: build
@@ -68,30 +63,9 @@ build-deb-stamp: $(debbuild)/config.status
 	dh_auto_build -B$(debbuild)
 	touch $@
 
-$(udebbuild)/config.status: configure
-	DEB_CFLAGS_MAINT_APPEND="$(DEBUGOPTFLAG) $(SIZEOPTFLAG) -fomit-frame-pointer" \
-	dh_auto_configure -B$(udebbuild) -- \
-		--libexecdir=\$${prefix}/lib \
-		--enable-d-i \
-		--without-rpath --with-db="rfc822db stack" \
-		--with-frontend="$(UDEB_FRONTENDS)" \
-		--with-default-frontend=newt \
-		--with-syslog-logging \
-		--with-textwrap \
-		--disable-selinux \
-		--with-conffile=$(CONFFILE) \
-		$(DEBUG_CONFIGURE_OPT)
-
-build-udeb: build-udeb-stamp
-build-udeb-stamp: $(udebbuild)/config.status
-	dh_testdir
-	dh_auto_build -B$(udebbuild)
-	touch $@
-
 clean:
 	dh_testdir
 	dh_auto_clean -B$(debbuild)
-	dh_auto_clean -B$(udebbuild)
 	[ ! -f globalmakeflags ] || $(MAKE) -C src/test clean
 	dh_auto_clean
 	dh_autoreconf_clean
@@ -104,7 +78,6 @@ install-arch: build
 	dh_testroot
 	dh_prep
 	$(MAKE) -C $(debbuild) install DESTDIR=$(CURDIR)/debian/tmp/deb
-	$(MAKE) -C $(udebbuild) install DESTDIR=$(CURDIR)/debian/tmp/udeb
 	dh_install -a
 
 install-indep:
@@ -146,7 +119,6 @@ endif
 	dh_strip -a
 	dh_compress -a
 	dh_fixperms -a
-	dh_makeshlibs -a --add-udeb=libdebconfclient0-udeb
 	dh_installdeb -a
 	dh_shlibdeps -a
 	dh_gencontrol -a
